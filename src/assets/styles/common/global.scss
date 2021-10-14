@@ -1,0 +1,157 @@
+@import './base.css';
+$theme-background-color: #f5f5f5;
+$root-container-min-width: 1200px;
+$error-border-color: #ff0000;
+$sidebar-max-width: 210px;
+$sidebar-min-width: 65px;
+
+/* 根容器 */
+.cus-root-container {
+  min-width: $root-container-min-width !important;
+  height: 100vh;
+  background: $theme-background-color;
+
+  /* menu下li设置统一背景色 */
+  %cus-menu {
+    .cus-menu {
+      border-right: none;
+      li {
+        background: $theme-background-color;
+      }
+
+      .el-menu-item {
+        height: 50px !important;
+      }
+      .el-submenu__title {
+        height: 50px !important;
+      }
+    }
+  }
+  /* 展开状态的menu */
+  .cus-aside {
+    width: $sidebar-max-width !important;
+
+    @extend %cus-menu;
+  }
+  /* 折叠状态的menu */
+  .cus-aside-colllapse {
+    width: $sidebar-min-width !important;
+
+    .el-submenu__title span {
+      display: none;
+    }
+
+    @extend %cus-menu;
+  }
+
+  /* 右侧区域 */
+  .cus-right-wrap {
+    background-color: $theme-background-color;
+
+    /* header 区域 */
+    .cus-header {
+      height: 90px !important;
+      padding: 0 0;
+      background-color: #fff;
+      overflow: hidden;
+
+      .el-tabs__header {
+        background-color: #fff;
+
+        .is-active {
+          background-color: $theme-background-color;
+        }
+      }
+    }
+    /* 主内容 区域 */
+    .cus-main {
+      background-color: #fff;
+      margin: 20px 20px 0 0;
+      padding-bottom: 0 !important;
+
+      /* 组件区域 */
+      .cus-main-content {
+        height: 100%;
+      }
+
+      /* 功能操作区 */
+      .funtion-wrap {
+        margin-bottom: 20px;
+      }
+
+      /* 表格区域 */
+      .el-table {
+        .el-dropdown-link {
+          cursor: pointer;
+          color: #409eff;
+        }
+        .el-icon-arrow-down {
+          font-size: 12px;
+        }
+
+        .cell {
+          .el-button,
+          .el-dropdown {
+            margin-left: 0;
+          }
+          .el-button,
+          .el-dropdown {
+            margin-right: 5px;
+          }
+        }
+      }
+
+      /* 表单区域 */
+      .submit-form {
+        margin-bottom: 70px; // 留出提交footerbar高度
+        .line {
+          text-align: center; // form表单两个日期中间的横杠
+        }
+        .el-form-item.is-error .el-input__inner,
+        .el-form-item.is-error .el-textarea__inner {
+          border-color: $error-border-color;
+        }
+        .el-form-item__error {
+          color: $error-border-color;
+        }
+      }
+
+      /* 表单底部提交区域 */
+      .footer-bar-min-width {
+        left: $sidebar-max-width;
+        width: calc(100% - #{$sidebar-max-width} - 20px) !important;
+        min-width: calc(#{$root-container-min-width} - #{$sidebar-max-width} - 20px);
+        transition-duration: 0.2s;
+      }
+      .footer-bar-max-width {
+        left: $sidebar-min-width;
+        width: calc(100% - #{$sidebar-min-width} - 20px) !important;
+        min-width: calc(#{$root-container-min-width} - #{$sidebar-min-width} - 20px);
+        transition-duration: 0.3s;
+      }
+
+      /* 分页区域 */
+      .el-pagination {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+
+        .el-pagination__sizes {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  /* 滚动条 */
+  /* 设置滚动条的样式 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+  }
+  /* 滚动条滑块 */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(133, 130, 130, 0.4);
+  }
+}
