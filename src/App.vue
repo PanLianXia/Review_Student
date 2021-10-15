@@ -6,7 +6,7 @@
 import $api from '@/api';
 import $userCode from '@/constants/user';
 import $im from '@/constants/im';
-import { onReadyStateUpdate, onKickOut, onError, onReceiveMessage, onUpdateConversationList, onNetStateChange, onMessageReadByPeer } from './utils/timLib.call-event';
+import { onReadyStateUpdate, onKickOut, onError, onReceiveMessage, onUpdateConversationData, onNetStateChange, onMessageReadByPeer } from './utils/timLib.call-event';
 import { getQueryString } from '@/utils/tools.js';
 
 export default {
@@ -17,12 +17,19 @@ export default {
     };
   },
   async created() {
+    await this.handleGetUserInfo(); //获取登录学员的信息
+    await this.handleGetUserIMAccount(); //获取登录学员IM聊天账号
+    await this.fnGetConversationTeacherList(); //获取会话列表老师信息
+
     this.$timLib.init('1400563046'); //初始化IM
     this.fnBindEvent(); //绑定IM监听事件
-    await this.handleGetUserInfo(); //获取登录学员的信息
     await this.fnLoginIM(); //登录IM
   },
   methods: {
+    async fnGetConversationTeacherList() {
+      let conversationTeacherList = await $api.conversation.getConversationTeacherList(this.strIMAccount);
+      this.$store.commit('chatStore/updateConversationTeacherList', conversationTeacherList);
+    },
     /**
      * 绑定IM监听事件
      */
@@ -38,7 +45,7 @@ export default {
       // 收到新消息
       this.$timLib.tim.on(this.$timLib.TIM.EVENT.MESSAGE_RECEIVED, onReceiveMessage);
       // 会话列表更新
-      this.$timLib.tim.on(this.$timLib.TIM.EVENT.CONVERSATION_LIST_UPDATED, onUpdateConversationList);
+      this.$timLib.tim.on(this.$timLib.TIM.EVENT.CONVERSATION_LIST_UPDATED, event => onUpdateConversationData(event.data));
       // 网络监测
       this.$timLib.tim.on(this.$timLib.TIM.EVENT.NET_STATE_CHANGE, onNetStateChange);
       // 已读回执
@@ -65,14 +72,14 @@ export default {
      * 获取领匠学员聊天账号
      */
     async handleGetUserIMAccount() {
-      let strIMAccount = await $api.user.getUserIMAccount(this.strUserId).catch(err => {
+      let objIMAccount = await $api.user.getUserIMAccount(this.strUserId).catch(err => {
         let { code } = err;
         this.$message({
           message: $userCode.getUserIMAccount[code]?.showMsg || '发生异常，请重试',
           type: 'warning',
         });
       });
-      return strIMAccount;
+      this.strIMAccount = objIMAccount.chatAccountNo;
     },
 
     /**
@@ -93,14 +100,13 @@ export default {
      * 登录IM
      */
     async fnLoginIM() {
-      let { chatAccountNo } = await this.handleGetUserIMAccount();
-      if (!chatAccountNo) return;
+      if (!this.strIMAccount) return;
 
-      let objUserSig = await this.handleGetIMSecretKey(chatAccountNo);
+      let objUserSig = await this.handleGetIMSecretKey(this.strIMAccount);
       if (!objUserSig) return;
 
       this.$timLib
-        .login(chatAccountNo, objUserSig.userSig)
+        .login(this.strIMAccount, objUserSig.userSig)
         .then(res => {
           console.log(res);
         })

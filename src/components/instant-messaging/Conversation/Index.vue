@@ -1,10 +1,10 @@
 <template>
   <div class="conversation-list-wrap">
     <!-- TODO -->
-    <div class="service-item">
+    <div class="service-item" v-for="(conversationList, reviewTypeName) in conversationData" :key="reviewTypeName">
       <div class="service-title">
         <div class="left-border"></div>
-        论文服务
+        {{ reviewTypeName }}
       </div>
       <conversation-item v-for="conversation in conversationList" :key="conversation.conversationID" :objConversation="conversation" />
       <div class="white-space"></div>
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     ...mapState({
-      conversationList: state => state.chatStore.conversationList,
+      conversationData: state => state.chatStore.conversationData,
     }),
   },
   methods: {

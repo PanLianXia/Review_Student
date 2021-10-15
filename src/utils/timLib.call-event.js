@@ -1,4 +1,5 @@
 import { Message } from 'element-ui';
+import { combineConversationData } from '@/utils/common.js';
 import TimLib from './timLib';
 // import $api from '@/api';
 
@@ -24,11 +25,11 @@ export const onReadyStateUpdate = async ({ name }) => {
     });
     store.commit('chatStore/updateCurrentUserProfile', myProfileResult.data);
 
-    // 获取会话列表
-    let conversationListResult = await $timLib.tim.getConversationList().catch(imError => {
+    // 更新会话列表
+    let imConversationListResult = await $timLib.tim.getConversationList().catch(imError => {
       console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
     });
-    store.commit('chatStore/updateConversationList', conversationListResult.data.conversationList);
+    onUpdateConversationData(imConversationListResult.data.conversationList);
 
     // 获取消息列表
     let currentConversation = store.state.chatStore.currentConversation;
@@ -79,11 +80,11 @@ export const onReceiveMessage = ({ data: messageList }) => {
  * 更新会话列表
  * @param {*} event
  */
-export const onUpdateConversationList = async event => {
-  console.log(event);
-  store.commit('chatStore/updateConversationList', event.data);
+export const onUpdateConversationData = async imConversationList => {
+  let conversationData = combineConversationData(store.state.chatStore.conversationTeacherList, imConversationList);
+  store.commit('chatStore/updateConversationData', conversationData);
   // $api.conversation.getConversationList().catch(err => console.log(err));
-  // store.commit('chatStore/updateConversationList', res.list);
+  // store.commit('chatStore/updateConversationData', res.list);
 };
 
 /**

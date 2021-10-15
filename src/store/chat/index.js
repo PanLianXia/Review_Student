@@ -1,4 +1,5 @@
 import { Message } from 'element-ui';
+
 /**
  *  即时聊天
  */
@@ -6,7 +7,8 @@ const state = {
   currentUserProfile: {},
   currentConversation: {},
   currentMessageList: [],
-  conversationList: [],
+  conversationData: {},
+  conversationTeacherList: [], // 会话列表老师信息
   nextReqMessageID: '',
   isCompleted: false, // 当前会话消息列表是否已经拉完了所有消息
 };
@@ -36,6 +38,9 @@ const getters = {
 
 // mutations
 const mutations = {
+  updateConversationTeacherList(state, conversationTeachers) {
+    state.conversationTeacherList = conversationTeachers;
+  },
   updateCurrentUserProfile(state, userProfile) {
     state.currentUserProfile = userProfile;
   },
@@ -64,10 +69,10 @@ const mutations = {
   /**
    * 更新会话列表
    * 调用时机：触发会话列表更新事件时。CONVERSATION_LIST_UPDATED
-   * @param {Conversation[]} conversationList
+   * @param {Conversation[]} conversationData
    */
-  updateConversationList(state, conversationList) {
-    state.conversationList = conversationList;
+  updateConversationData(state, conversationData) {
+    state.conversationData = conversationData;
   },
   /**
    * 更新当前会话

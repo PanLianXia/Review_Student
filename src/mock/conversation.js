@@ -145,4 +145,27 @@ Mock.mock(/\/v1\/conversations/, 'get', options => {
   return list;
 });
 
+Mock.mock(/\/reviewapi\/v1\/conversationTeachers/, 'get', () => {
+  return [
+    {
+      conversationID: 'GROUPmeet_001',
+      teacherAvatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      teacherNick: '张老师',
+      reviewTypeName: '论文',
+    },
+    {
+      conversationID: 'GROUP@TGS#3PGXYJQHN',
+      teacherAvatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201501%2F30%2F20150130180443_QTthA.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636877018&t=e0f65da08b70aaa7ace5f3949b90637e',
+      teacherNick: '王老师',
+      reviewTypeName: '论文',
+    },
+    {
+      conversationID: 'GROUP@TGS#3ZCW2JQHK',
+      teacherAvatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2F50%2Fv2-82fbd4e910229864eb7b67f1516c7dbd_hd.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636877040&t=3178dc4d380427c58d0e5586fc59d1f8',
+      teacherNick: '李老师',
+      reviewTypeName: '评审',
+    },
+  ];
+});
+
 export default Mock;

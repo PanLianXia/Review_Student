@@ -9,4 +9,9 @@ export default {
   getConversationList() {
     return $api.get(`${BASE_URL}/v1/conversations`);
   },
+
+  getConversationTeacherList(imAccount) {
+    console.log(imAccount);
+    return $api.get(`${BASE_URL}/v1/conversationTeachers`);
+  },
 };

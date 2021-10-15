@@ -26,7 +26,7 @@ Vue.prototype.$browserTitleTimer = undefined;
 
 Vue.config.productionTip = false;
 
-// require('./mock');
+require('./mock');
 
 new Vue({
   router,
