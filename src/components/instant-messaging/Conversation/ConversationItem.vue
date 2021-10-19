@@ -35,7 +35,7 @@ export default {
     strAvatar() {
       switch (this.objConversation.type) {
         case this.$timLib.TIM.TYPES.CONV_GROUP:
-          return this.objConversation.teacherAvatar || this.objConversation.groupProfile.avatar;
+          return this.objConversation.teacherHeadPortrait || this.objConversation.groupProfile.avatar;
         case this.$timLib.TIM.TYPES.CONV_C2C:
           return this.objConversation.userProfile.avatar;
         default:
@@ -46,7 +46,7 @@ export default {
     strNick() {
       switch (this.objConversation.type) {
         case this.$timLib.TIM.TYPES.CONV_GROUP:
-          return this.objConversation.teacherNick || this.objConversation.groupProfile.name || this.objConversation.groupProfile.groupID;
+          return this.objConversation.teacherNickName || this.objConversation.groupProfile.name || this.objConversation.groupProfile.groupID;
         case this.$timLib.TIM.TYPES.CONV_C2C:
           return this.objConversation.userProfile.nick || this.objConversation.userProfile.userID;
         default:

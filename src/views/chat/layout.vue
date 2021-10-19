@@ -130,7 +130,7 @@ export default {
         let name = this.currentConversation.userProfile.nick || this.toAccount;
         return name;
       } else if (this.currentConversation.type === 'GROUP') {
-        return this.currentConversation.groupProfile.name || this.toAccount;
+        return '';
       } else if (this.currentConversation.conversationID === '@TIM#SYSTEM') {
         return '系统通知';
       }

@@ -1,10 +1,10 @@
 <template>
   <div class="conversation-list-wrap">
     <!-- TODO -->
-    <div class="service-item" v-for="(conversationList, reviewTypeName) in conversationData" :key="reviewTypeName">
+    <div class="service-item" v-for="(conversationList, reviewType) in conversationData" :key="reviewType">
       <div class="service-title">
         <div class="left-border"></div>
-        {{ reviewTypeName }}
+        {{ reviewType }}
       </div>
       <conversation-item v-for="conversation in conversationList" :key="conversation.conversationID" :objConversation="conversation" />
       <div class="white-space"></div>

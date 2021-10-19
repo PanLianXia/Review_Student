@@ -26,10 +26,10 @@ export const onReadyStateUpdate = async ({ name }) => {
     store.commit('chatStore/updateCurrentUserProfile', myProfileResult.data);
 
     // 更新会话列表
-    let imConversationListResult = await $timLib.tim.getConversationList().catch(imError => {
-      console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
-    });
-    onUpdateConversationData(imConversationListResult.data.conversationList);
+    // let imConversationListResult = await $timLib.tim.getConversationList().catch(imError => {
+    //   console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+    // });
+    // onUpdateConversationData(imConversationListResult.data.conversationList);
 
     // 获取消息列表
     let currentConversation = store.state.chatStore.currentConversation;
