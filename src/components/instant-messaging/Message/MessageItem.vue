@@ -1,5 +1,5 @@
 <template>
-  <div class="message-wrap" :class="strMessagePosition">
+  <div class="message-wrap" :class="strMessagePosition" v-if="bShowMessageItem">
     <!-- 未撤回消息 -->
     <div v-if="!objMessage.isRevoked">
       <div class="main-wrap">
@@ -24,7 +24,7 @@
                 <!-- 图片消息 -->
                 <div v-if="objMessage.type === $timLib.TIM.TYPES.MSG_IMAGE" class="img-box">
                   <img class="image-element" :src="strImageUrl" @load="fnOnImageLoaded" @click="fnImagePreviewer" />
-                  <el-progress v-if="objMessage.status === 'unSend'" :percentage="nPercentage" :color="percentage => (percentage === 100 ? '#67c23a' : '#409eff')" />
+                  <!-- <el-progress v-if="objMessage.status === 'unSend'" :percentage="nPercentage" :color="percentage => (percentage === 100 ? '#67c23a' : '#409eff')" /> -->
                   <div class="download" @click="fnDownloadFile(strImageUrl, '图片')">下载</div>
                 </div>
                 <!-- 文件消息 -->
@@ -90,6 +90,21 @@ export default {
       userInfo: state => state.userStore.userInfo,
       currentConversation: state => state.chatStore.currentConversation,
     }),
+    bShowMessageItem() {
+      // 群提示信息不展示
+      return !(
+        (
+          this.objMessage.type === this.$timLib.TIM.TYPES.MSG_GRP_TIP || //群提示消息
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_MBR_JOIN || //有成员加群
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_MBR_QUIT || //有群成员退群
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_MBR_KICKED_OUT || //有群成员被踢出群
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_MBR_SET_ADMIN || //有群成员被设为管理员
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_MBR_CANCELED_ADMIN || //有群成员被撤销管理员
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_GRP_PROFILE_UPDATED || //群组资料变更
+          this.objMessage.type === this.$timLib.TIM.TYPES.GRP_TIP_MBR_PROFILE_UPDATED
+        ) //群成员资料变更
+      );
+    },
     //头像
     strAvatar() {
       return this.bIsMine ? this.userInfo.UserHeadImg : this.objMessage.avatar;

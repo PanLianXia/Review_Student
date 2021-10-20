@@ -142,7 +142,6 @@ export default {
     currentUnreadCount(next) {
       if (!this.documentHidden && next > 0) {
         this.$timLib.tim.setMessageRead({ conversationID: this.currentConversation.conversationID });
-        // this.$timLib.tim.setMessageRead({ conversationID: this.currentConversation.dutyConversationID });
       }
     },
 
@@ -150,7 +149,6 @@ export default {
     documentHidden(next) {
       if (!next && this.currentUnreadCount > 0) {
         this.$timLib.tim.setMessageRead({ conversationID: this.currentConversation.conversationID });
-        // this.$timLib.tim.setMessageRead({ conversationID: this.currentConversation.dutyConversationID });
       }
     },
     currentMessageList() {

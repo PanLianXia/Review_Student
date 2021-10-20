@@ -12,7 +12,7 @@ export function combineConversationData(conversationTeacherList, imConversationL
   imConversationList.forEach(imConversationItem => {
     let conversationTeacher = conversationTeacherList.find(conversationTeacherItem => imConversationItem.conversationID === conversationTeacherItem.groupId);
     if (!conversationTeacher) {
-      conversationData['其他分类'].push(imConversationItem);
+      // conversationData['其他分类'].push(imConversationItem);
       return;
     }
 

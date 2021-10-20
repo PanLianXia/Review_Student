@@ -12,6 +12,6 @@ export default {
 
   getConversationTeacherList(imAccount) {
     console.log(imAccount);
-    return $api.get(`${BASE_URL}/v1/chat-accounts/${imAccount}/groups`);
+    return $api.get(`${BASE_URL}/v1/chat-accounts/${imAccount}/conversations`);
   },
 };

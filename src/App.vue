@@ -14,18 +14,18 @@ export default {
     return {
       strUserId: getQueryString('userId'),
       strIMAccount: '',
+      objIMConfig: {},
     };
   },
   async created() {
     await this.handleGetUserInfo(); //获取登录学员的信息
     await this.handleGetUserIMAccount(); //获取登录学员IM聊天账号
     await this.fnGetConversationTeacherList(); //获取会话列表老师信息
-
-    this.$timLib.init('1400563046'); //初始化IM
-    this.fnBindEvent(); //绑定IM监听事件
-    await this.fnLoginIM(); //登录IM
   },
   methods: {
+    /**
+     * 获取会话列表老师信息
+     */
     async fnGetConversationTeacherList() {
       let conversationTeacherList = await $api.conversation.getConversationTeacherList(this.strIMAccount);
       this.$store.commit('chatStore/updateConversationTeacherList', conversationTeacherList);
@@ -79,36 +79,39 @@ export default {
           type: 'warning',
         });
       });
+      if (!objIMAccount) return;
+
       this.strIMAccount = objIMAccount.chatAccountNo;
+      await this.handleGetIMSecretKey();
     },
 
     /**
      * 获取聊天登录需要的秘钥
      */
-    async handleGetIMSecretKey(iMAccount) {
-      let strUserSig = await $api.chat.getIMConfig(iMAccount).catch(err => {
+    async handleGetIMSecretKey() {
+      this.objIMConfig = await $api.chat.getIMConfig(this.strIMAccount).catch(err => {
         let { code } = err;
         this.$message({
           message: $im.imConfig[code]?.showMsg || '发生异常，请重试',
           type: 'warning',
         });
       });
-      return strUserSig;
+      if (!this.objIMConfig) return;
+
+      this.$timLib.init(this.objIMConfig.imSdkAppId); //初始化IM
+      this.fnBindEvent(); //绑定IM监听事件
+      await this.fnLoginIM(); //登录IM
     },
 
     /**
      * 登录IM
      */
     async fnLoginIM() {
-      if (!this.strIMAccount) return;
-
-      let objUserSig = await this.handleGetIMSecretKey(this.strIMAccount);
-      if (!objUserSig) return;
-
+      if (!this.strIMAccount || !this.objIMConfig.userSig) return;
       this.$timLib
-        .login(this.strIMAccount, objUserSig.userSig)
-        .then(res => {
-          console.log(res);
+        .login(this.strIMAccount, this.objIMConfig.userSig)
+        .then(() => {
+          console.log('IM登录成功');
         })
         .catch(err => {
           console.log(err);
