@@ -101,7 +101,7 @@ $chat-theme-color: #4b83f0;
   display: flex;
   align-items: center;
   height: 89px;
-  border-top: 2px solid #f3f5f8;
+  border-bottom: 2px solid #f3f5f8;
   padding: 0 26px;
   background-color: #fff;
   cursor: pointer;

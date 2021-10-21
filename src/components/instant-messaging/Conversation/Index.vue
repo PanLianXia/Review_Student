@@ -8,7 +8,7 @@
           {{ reviewType }}
         </div>
         <conversation-item v-for="conversation in conversationList" :key="conversation.conversationID" :objConversation="conversation" />
-        <div class="white-space"></div>
+        <div class="white-space" v-if="Object.keys(conversationData)[Object.keys(conversationData).length - 1] !== reviewType"></div>
       </div>
     </div>
   </div>
@@ -75,6 +75,7 @@ $chat-theme-color: #4b83f0;
       align-items: center;
       height: 67px;
       padding-left: 13px;
+      border-bottom: 2px solid #f3f5f8;
       background-color: #fff;
       font-size: 24px;
       color: #363e47;
@@ -90,7 +91,6 @@ $chat-theme-color: #4b83f0;
     .white-space {
       height: 10px;
       background-color: #fff;
-      border-top: 2px solid #f3f5f8;
     }
   }
 }

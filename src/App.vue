@@ -81,7 +81,7 @@ export default {
       });
       if (!objIMAccount) return;
 
-      this.strIMAccount = objIMAccount.chatAccountNo;
+      this.strIMAccount = '100500';
       await this.handleGetIMSecretKey();
     },
 

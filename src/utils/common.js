@@ -7,7 +7,7 @@ export function combineConversationData(conversationTeacherList, imConversationL
       conversationData[conversationTeacherItem.reviewType] = [];
     }
   });
-  conversationData['其他分类'] = [];
+  // conversationData['其他分类'] = [];
 
   imConversationList.forEach(imConversationItem => {
     let conversationTeacher = conversationTeacherList.find(conversationTeacherItem => imConversationItem.conversationID === conversationTeacherItem.groupId);

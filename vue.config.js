@@ -35,7 +35,7 @@ module.exports = {
     // 跨域
     proxy: {
       '/reviewapi': {
-        target: 'http://reviewapi.dev.lingjiang.com',
+        target: 'http://reviewapi.test.lingjiang.com',
         changeOrigin: true,
         pathRewrite: {
           '/reviewapi': '/',

@@ -9,8 +9,7 @@ export default {
    * @returns
    */
   getUserInfo(id) {
-    console.log(id);
-    return $api.get(`${LINGJIANG_BASE_URL}/api/studentrelationteacher/studentdetail/333`);
+    return $api.get(`${LINGJIANG_BASE_URL}/api/studentrelationteacher/studentdetail/${id}?userId=${id}`);
   },
 
   /**

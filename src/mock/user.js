@@ -5,6 +5,6 @@ let resultStudentInfo = {
 };
 
 export default {
-  'get|/lingjiangapi/api/studentrelationteacher/studentdetail/333': resultStudentInfo,
+  'get|/lingjiangapi/api/studentrelationteacher/studentdetail/33311': resultStudentInfo,
   'get|/reviewapi/api/studentrelationteacher/studentIMAccount/69214': 'STU001',
 };
